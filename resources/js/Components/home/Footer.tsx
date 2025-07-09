@@ -1,6 +1,7 @@
 
+import { Link } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+
 
 const Footer = () => {
     const [year, setYear] = useState(new Date().getFullYear());
@@ -59,29 +60,29 @@ const Footer = () => {
                 <div>
                     <h3 className="mb-4 sm:mb-8">Company</h3>
                     <ul>
-                        <li><Link to={''} className="hover:underline">About Us</Link></li>
-                        <li><Link to={''} className="hover:underline">Blog</Link></li>
-                        <li><Link to={''}className="hover:underline">Contact Us</Link></li>
-                        <li><Link to={''} className="hover:underline">Pricing</Link></li>
-                        <li><Link to={''} className="hover:underline">Testimonials</Link></li>
+                        <li><Link className="hover:underline" href={''}>About Us</Link></li>
+                        <li><Link className="hover:underline" href={''}>Blog</Link></li>
+                        <li><Link className="hover:underline" href={''}>Contact Us</Link></li>
+                        <li><Link className="hover:underline" href={''}>Pricing</Link></li>
+                        <li><Link className="hover:underline" href={''}>Testimonials</Link></li>
                     </ul>
                 </div>
                 <div>
                     <h3 className="mb-4 sm:mb-8">Support</h3>
                     <ul>
-                        <li><Link to={''} className="hover:underline" >Help Center</Link></li>
-                        <li><Link to={''}  className="hover:underline">Terms of Service</Link></li>
-                        <li><Link to={''}  className="hover:underline">Legal</Link></li>
-                        <li><Link to={''}  className="hover:underline">Privacy Policy</Link></li>
-                        <li><Link to={''}  className="hover:underline">Status</Link></li>
+                        <li><Link className="hover:underline" href={''} >Help Center</Link></li>
+                        <li><Link  className="hover:underline" href={''}>Terms of Service</Link></li>
+                        <li><Link  className="hover:underline" href={''}>Legal</Link></li>
+                        <li><Link   className="hover:underline" href={''}>Privacy Policy</Link></li>
+                        <li><Link  className="hover:underline" href={''}>Status</Link></li>
                     </ul>
                 </div>
                 <div>
                     <h3 className="mb-4 sm:mb-8">Other Links</h3>
                     <ul>
-                        <li><Link to={''} className="hover:underline">CA Notice at Collection</Link></li>
-                        <li><Link to={''} className="hover:underline">Cookie Settings</Link></li>
-                        <li><Link to={''} className="hover:underline">Accessibility</Link></li>
+                        <li><Link  className="hover:underline" href={''}>CA Notice at Collection</Link></li>
+                        <li><Link  className="hover:underline" href={''}>Cookie Settings</Link></li>
+                        <li><Link className="hover:underline" href={''}>Accessibility</Link></li>
                     </ul>
                 </div>
             </div>

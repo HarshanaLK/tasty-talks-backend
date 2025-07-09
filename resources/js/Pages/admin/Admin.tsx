@@ -1,5 +1,6 @@
+import AdminLayout from "@/Layouts/AdminLayout";
 import { useState, useMemo } from "react";
-import AdminLayout from "../../layouts/AdminLayout";
+
 
 type User = {
     id: number;
@@ -62,7 +63,7 @@ export default function Admin() {
     };
 
     return (
-        <AdminLayout>
+        <AdminLayout title={""} bRoutes={undefined}>
             <div className="max-w-7xl mx-auto">
                 <div className="p-6">
                     <h1 className="text-2xl font-semibold mb-4">Users Details</h1>
@@ -141,7 +142,7 @@ export default function Admin() {
                             <button
                                 key={index}
                                 onClick={() => setCurrentPage(index + 1)}
-                                className={`px-3 py-1 border rounded 
+                                className={`px-3 py-1 border rounded
                                         ${currentPage === index + 1
                                         ? "bg-green-600 text-white font-semibold"
                                         : "bg-green-500 text-white hover:bg-green-600"}`}
