@@ -54,6 +54,6 @@ class User extends Authenticatable
 
      public function shop()
     {
-        return $this->hasMany(Shop::class); // Adjust this if your Module model's namespace is different
+        return $this->hasOne(Shop::class); // Adjust this if your Module model's namespace is different
     }
 }

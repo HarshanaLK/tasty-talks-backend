@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ShopController extends Controller
 {
@@ -13,9 +16,7 @@ class ShopController extends Controller
      */
     public function index()
     {
-         return Inertia::render('shop/ShopEdit', [
-
-        ]);
+        return Inertia::render('shop/ShopEdit', []);
     }
 
     /**
@@ -29,9 +30,57 @@ class ShopController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function save(Request $request)
     {
-        //
+        // Validate request inputs
+        $request->validate([
+            'shop_name' => 'required|string|max:255',
+            'shop_address' => 'required|string|max:255',
+            'location' => 'nullable|string',
+            'open_time' => 'nullable|date_format:H:i',
+            'close_time' => 'nullable|date_format:H:i',
+            'shop_status' => 'required|in:open,closed',
+            'description' => 'nullable|string',
+            'rating' => 'nullable|numeric|min:0|max:5',
+            'logo' => 'nullable|image|max:2048',
+            'cover' => 'nullable|image|max:4096',
+        ]);
+
+        $user = Auth::user();
+
+        // Get existing shop or create new
+        $shop = $user->shop ?? new Shop();
+
+        // Handle logo upload
+        if ($request->hasFile('logo')) {
+            if ($shop->logo) {
+                Storage::disk('public')->delete($shop->logo);
+            }
+            $shop->logo = $request->file('logo')->store('shops/logos', 'public');
+        }
+
+        // Handle cover upload
+        if ($request->hasFile('cover')) {
+            if ($shop->cover) {
+                Storage::disk('public')->delete($shop->cover);
+            }
+            $shop->cover = $request->file('cover')->store('shops/covers', 'public');
+        }
+
+        // Assign other fields
+        $shop->user_id = $user->id;
+        $shop->shop_name = $request->shop_name;
+        $shop->shop_address = $request->shop_address;
+        $shop->location = $request->location;
+        $shop->open_time = $request->open_time;
+        $shop->close_time = $request->close_time;
+        $shop->shop_status = $request->shop_status;
+        $shop->description = $request->description;
+        $shop->rating = $request->rating;
+
+        $shop->save();
+
+        return redirect()->back()->with('success', 'Shop saved successfully!');
     }
 
     /**

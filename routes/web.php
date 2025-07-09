@@ -33,7 +33,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/user/shop/dashboard', [ShopController::class, 'index'])->name('shop.index');
-      Route::get('/user/shop/food', [FoodMenuController::class, 'index'])->name('food.index');
+    Route::get('/user/shop/food', [FoodMenuController::class, 'index'])->name('food.index');
+
+
+    //  Route::post('/admin/shops/store', [ShopController::class, 'store'])->name('shops.store');
 });
+
+Route::post('/shops/save', [ShopController::class, 'save'])->middleware('auth')->name('shops.save');
+
 
 require __DIR__ . '/auth.php';
