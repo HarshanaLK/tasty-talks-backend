@@ -60,7 +60,7 @@ export default function MenuEdit() {
     };
 
     return (
-        <AdminLayout  title={''} bRoutes={undefined}>
+        <AdminLayout  title={'Food Menu Details'} bRoutes={undefined}>
             <div className='max-w-7xl mx-auto'>
                 <div className="max-w-7xl mx-auto p-6 space-y-6">
                     <h1 className="text-2xl font-bold">Edit Food Menu</h1>

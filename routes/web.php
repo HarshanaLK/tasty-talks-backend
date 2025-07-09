@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\FoodMenu\FoodMenuController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Shop\ShopController;
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/user/shop/dashboard', [ShopController::class, 'index'])->name('shop.index');
+      Route::get('/user/shop/food', [FoodMenuController::class, 'index'])->name('food.index');
 });
 
 require __DIR__ . '/auth.php';
