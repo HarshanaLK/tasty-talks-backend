@@ -1,4 +1,5 @@
 import FlashAlerts from '@/Components/elements/alerts/FlashAlerts';
+import Footer from '@/Components/home/Footer';
 import Header from '@/Components/shared/Header';
 import Sidebar from '@/Components/shared/Sidebar/Sidebar';
 import { usePage } from '@inertiajs/react';
@@ -16,6 +17,8 @@ const AdminLayout = ({
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const pageProps = usePage().props;
 
+    console.log(pageProps);
+
     return (
         <div className={" min-h-[100vh] h-full scroll-smooth bg-slate-100 "}>
             <Header
@@ -29,7 +32,7 @@ const AdminLayout = ({
                     <main className="container mx-auto flex-1 bg-slate-100 p-8 sm:py-8 lg:p-8">
                         {children}
                     </main>
-                    {/* <Footer /> */}
+                    <Footer />
                 </div>
             </div>
             <FlashAlerts flash={pageProps.flash} />

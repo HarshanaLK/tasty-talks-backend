@@ -1,6 +1,6 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { useState } from 'react';
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { FaStar } from 'react-icons/fa';
 
 interface ShopHomeProps {
@@ -34,7 +34,7 @@ export default function ShopHome({ shop }: ShopHomeProps) {
         cover: null as File | null,
     });
 
-    console.log(shop);
+   
 
     const [logoPreview, setLogoPreview] = useState<string | null>(
         shop.logo_url ?? (shop.logo ? `/storage/${shop.logo}` : null)
@@ -78,8 +78,11 @@ export default function ShopHome({ shop }: ShopHomeProps) {
         });
     };
 
+
+
     return (
         <AdminLayout title={'Shop Details'} bRoutes={undefined}>
+
             <div className="max-w-7xl mx-auto">
                 <div className="p-4 flex justify-between items-center mt-5 w-full">
                     <div>

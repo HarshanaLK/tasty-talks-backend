@@ -1,5 +1,4 @@
 import SuccessAlert from "./SuccessAlert";
-import { PageProps } from "@/types";
 import DangerAlert from "./DangerAlert";
 
 export default function FlashAlerts({ flash }: { flash: any }) {
