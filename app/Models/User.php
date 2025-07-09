@@ -51,4 +51,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+     public function shop()
+    {
+        return $this->hasMany(Shop::class); // Adjust this if your Module model's namespace is different
+    }
 }
