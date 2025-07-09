@@ -1,17 +1,63 @@
-import { FaShieldHalved } from "react-icons/fa6";
-import { IoBarChart, IoCogSharp, IoIdCardSharp, IoLayers, IoSettings } from "react-icons/io5";
-import { RiSettings5Fill } from "react-icons/ri";
-
-
 export const navigationLinks = [
-
+    // { name: "Dashboard", link: false, border: false },
+    // {
+    //     name: "Dashboard",
+    //     link: true,
+    //     border: false,
+    //     startWith: "/dashboard",
+    //     route: "dashboard",
+    //     icon: "ChartPieIcon",
+    // },
+    { name: "Order Management", link: false, border: false },
     {
-        name: "Dashboard",
+        name: "Orders",
         link: true,
         border: false,
-        startWith: "",
-        route: "",
-        firstItem : true ,
-        icon: IoBarChart,
+        startWith: "/orders",
+        route: "dashboard",
+        icon: "SwatchIcon",
+    },{
+        name: "Customers",
+        link: true,
+        border: false,
+        startWith: "/customers",
+        route: "dashboard",
+        icon: "UsersIcon",
+    },
+    { name: "Inventory Management", link: false, border: true },
+    {
+        name: "Stock Vehicles",
+        link: true,
+        border: false,
+        startWith: "/inventory/vehicles",
+        route: "dashboard",
+        icon: "ShieldCheckIcon",
+    },
+    { name: "Auction Management", link: false, border: true },
+    {
+        name: "Customer Bets",
+        link: true,
+        border: false,
+        startWith: "/customerBets",
+        route: "dashboard",
+        icon: "Squares2X2Icon",
+    },
+    { name: "Inquiries Management", link: false, border: true },
+    {
+        name: "Inquiries",
+        link: true,
+        border: false,
+        startWith: "/inquiries",
+        route: "dashboard",
+        icon: "ChatBubbleOvalLeftEllipsisIcon",
+    },
+    { name: "Other", link: false, border: true },
+    {
+        name: "Profile Settings",
+        link: true,
+        border: false,
+        startWith: "/profile",
+        route: "dashboard",
+        icon: "ShieldExclamationIcon",
     },
 ];
