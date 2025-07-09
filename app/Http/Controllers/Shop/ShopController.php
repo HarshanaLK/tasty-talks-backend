@@ -16,9 +16,15 @@ class ShopController extends Controller
      */
     public function index()
     {
-        return Inertia::render('shop/ShopEdit', []);
-    }
 
+        $user = Auth::user(); // Get the authenticated user
+
+        $shop = $user->shop; // Get the related shop via the hasOne relationship
+
+        return Inertia::render('shop/ShopEdit', [
+            'shop' => $shop,
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -27,6 +33,8 @@ class ShopController extends Controller
         //
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      */
@@ -34,12 +42,12 @@ class ShopController extends Controller
     {
         // Validate request inputs
         $request->validate([
-            'shop_name' => 'required|string|max:255',
-            'shop_address' => 'required|string|max:255',
+            'shop_name' => 'nullable|string|max:255',
+            'shop_address' => 'nullable|string|max:255',
             'location' => 'nullable|string',
-            'open_time' => 'nullable|date_format:H:i',
-            'close_time' => 'nullable|date_format:H:i',
-            'shop_status' => 'required|in:open,closed',
+            'open_time' => 'nullable|string',
+            'close_time' => 'nullable|string',
+            'shop_status' => 'nullable|in:open,closed',
             'description' => 'nullable|string',
             'rating' => 'nullable|numeric|min:0|max:5',
             'logo' => 'nullable|image|max:2048',
@@ -80,7 +88,7 @@ class ShopController extends Controller
 
         $shop->save();
 
-        return redirect()->back()->with('success', 'Shop saved successfully!');
+        return redirect()->route('shop.index')->with('success', 'Shop saved successfully!');
     }
 
     /**
