@@ -115,7 +115,7 @@ const Header = ({
                           <Link href={route("dashboard")} className="px-2">
                               <img
                                   className="w-full object-cover self-center bg-white rounded-lg"
-                                  src={"/assets/images/hs-logo.png"}
+                                  src={""}
                                   alt="site logo"
                               />
                           </Link>
