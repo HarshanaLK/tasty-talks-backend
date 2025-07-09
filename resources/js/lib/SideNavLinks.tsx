@@ -8,12 +8,12 @@ export const navigationLinks = [
     //     route: "dashboard",
     //     icon: "ChartPieIcon",
     // },
-    { name: "Order Management", link: false, border: false },
+    { name: "User Management", link: false, border: false },
     {
-        name: "Orders",
+        name: "Users",
         link: true,
         border: false,
-        startWith: "/orders",
+        startWith: "/admin/dashboard",
         route: "dashboard",
         icon: "SwatchIcon",
     },{
@@ -57,7 +57,7 @@ export const navigationLinks = [
         link: true,
         border: false,
         startWith: "/profile",
-        route: "dashboard",
+        route: "profile.edit",
         icon: "ShieldExclamationIcon",
     },
 ];

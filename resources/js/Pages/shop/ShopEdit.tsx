@@ -1,5 +1,6 @@
+import AdminLayout from '@/Layouts/AdminLayout';
 import { useState } from 'react';
-import ShopEditLayout from '../../layouts/ShopEditLayout';
+
 import { FaStar } from 'react-icons/fa';
 
 export default function ShopHome() {
@@ -63,7 +64,7 @@ export default function ShopHome() {
     };
 
     return (
-        <ShopEditLayout>
+        <AdminLayout  title={'Shop Details'} bRoutes={undefined}>
             <div className="max-w-7xl mx-auto">
                 {/* TopBar section */}
                 <div className="p-4 flex justify-between items-center mt-5 w-full">
@@ -255,6 +256,6 @@ export default function ShopHome() {
                     </div>
                 </div>
             </div>
-        </ShopEditLayout>
+        </AdminLayout>
     );
 }

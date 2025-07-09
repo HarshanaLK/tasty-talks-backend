@@ -109,15 +109,17 @@ const Header = ({
               </Dialog>
           </Transition.Root>
           <div className=" relative lg:fixed top-0 left-0 right-0 z-50 flex border-b bg-white">
-              <header className="grid lg:flex w-full lg:justify-between lg:mx-auto py-2 md:py-0">
+              <header className="grid lg:flex w-full lg:justify-between lg:mx-auto py-3 md:py-0">
                   <div className="fixed z-50 top-0 left-0 right-0 lg:relative lg:top-0 lg:flex lg:flex-1 py-2 w-full">
                       <div className="relative w-full px-4 lg:px-0 justify-between lg:w-[260px] flex self-center items-center">
                           <Link href={route("dashboard")} className="px-2">
-                              <img
+                              {/* <img
                                   className="w-full object-cover self-center bg-white rounded-lg"
                                   src={""}
                                   alt="site logo"
-                              />
+                              /> */}
+                              <h1 className="text-2xl font-bold ml-5 text-green-500">TastyTalks</h1>
+
                           </Link>
                           <button
                               type="button"

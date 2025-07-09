@@ -1,5 +1,6 @@
+import AdminLayout from '@/Layouts/AdminLayout';
 import { useState } from 'react';
-import ShopEditLayout from '../../layouts/ShopEditLayout';
+
 import { IoMdClose } from 'react-icons/io';
 
 export default function MenuEdit() {
@@ -59,7 +60,7 @@ export default function MenuEdit() {
     };
 
     return (
-        <ShopEditLayout>
+        <AdminLayout  title={''} bRoutes={undefined}>
             <div className='max-w-7xl mx-auto'>
                 <div className="max-w-7xl mx-auto p-6 space-y-6">
                     <h1 className="text-2xl font-bold">Edit Food Menu</h1>
@@ -175,6 +176,6 @@ export default function MenuEdit() {
                     )}
                 </div>
             </div>
-        </ShopEditLayout>
+        </AdminLayout>
     );
 }

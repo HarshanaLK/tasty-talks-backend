@@ -13,7 +13,7 @@ const Sidebar: FC<ISidebar> = ({ user }) => {
     return (
         <>
             {/* Static sidebar for desktop */}
-            <div className="hidden lg:fixed lg:inset-y-[70px] lg:flex lg:w-[260px] lg:flex-col h-[100vh] fixed left-0 top-0 bottom-0">
+            <div className="hidden lg:fixed lg:inset-y-[56px] lg:flex lg:w-[260px] lg:flex-col h-[100vh] fixed left-0 top-0 bottom-0">
                 {/* Sidebar component, swap this element with another sidebar if you like */}
                 <div className="flex flex-grow flex-col overflow-y-auto bg-secondary pb-4 pl-4 pr-3 pt-0 sticky">
                     <nav
