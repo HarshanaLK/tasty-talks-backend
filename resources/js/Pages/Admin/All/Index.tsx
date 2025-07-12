@@ -95,7 +95,7 @@ export default function Orders({ users, filters }: { users: any; filters: any })
                                 </TableTd>
                                 <TableTd>
                                     <p className="break-words">
-                                        {user.role ?? '-'}
+                                        {user.address ?? '-'}
                                     </p>
                                 </TableTd>
                                 <TableTd>

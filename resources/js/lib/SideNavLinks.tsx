@@ -30,7 +30,7 @@ export const navigationLinks = [
         name: "Shop Details",
         link: true,
         border: false,
-        startWith: "/user/shop/dashboard",
+        startWith: "/admin/shop",
         route: "shop.index",
         icon: "ShieldCheckIcon",
     }, {

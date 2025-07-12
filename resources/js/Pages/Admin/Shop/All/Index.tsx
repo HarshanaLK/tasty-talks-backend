@@ -6,7 +6,7 @@ import { ViewfinderCircleIcon } from '@heroicons/react/20/solid';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { Head } from '@inertiajs/react';
 
-export default function Orders({ users, filters }: { users: any; filters: any }) {
+export default function Orders({ shops, filters }: { shops: any; filters: any }) {
     const tableColumns = [
         { label: "", sortField: "", sortable: false },
         { label: "ID", sortField: "id", sortable: true },
@@ -29,11 +29,13 @@ export default function Orders({ users, filters }: { users: any; filters: any })
             link: route("dashboard"),
         },
         {
-            name: "Users",
+            name: "Shops",
             hasArrow: true,
             link: route("admin.index"),
         },
     ];
+
+    console.log(shops);
 
     return (
         <AdminLayout title="Shops" bRoutes={bRoutes}>
@@ -42,12 +44,12 @@ export default function Orders({ users, filters }: { users: any; filters: any })
                 <MasterTable
                     tableColumns={tableColumns}
                     filters={filters}
-                    url={route("admin.index")}
-                    links={users.links}
+                    url={route("shop.index")}
+                    links={shops.links}
                     search={search}
                 >
-                    {users.data?.length > 0 ? (
-                        users.data.map((user: any) => (
+                    {shops.data?.length > 0 ? (
+                        shops.data.map((user: any) => (
                             <TableBody
                                 key={user.id}
                                 buttons={
@@ -59,7 +61,7 @@ export default function Orders({ users, filters }: { users: any; filters: any })
                                             <span>View</span>
                                         </PrimaryLink>
                                         <ConfirmButton
-                                            url={route("admin.destroy", { id: user.id })}
+                                            url={route("shop.destroy", { id: user.id })}
                                             label={
                                                 <div className="flex">
                                                     <TrashIcon className="mr-2 h-4 w-4" />
@@ -82,10 +84,10 @@ export default function Orders({ users, filters }: { users: any; filters: any })
                                     <p className="break-words">{user.shop_address}</p>
                                 </TableTd>
                                 <TableTd>
-                                    <p className="break-words">{user.open_time}</p>
+                                    <p className="break-words">{user.open_time_formatted}</p>
                                 </TableTd>
                                 <TableTd>
-                                    <p className="break-words">{user.close_time}</p>
+                                    <p className="break-words">{user.close_time_formatted}</p>
                                 </TableTd>
                                 <TableTd>
                                     <ShopStatusView status={user.shop_status} />

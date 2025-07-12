@@ -32,9 +32,8 @@ class ShopController extends Controller
         $filters['sortDirection'] ??= 'desc';
         $filters['rowPerPage'] ??= 20;
         $filters['status'] ??= null;
-        $filters['role'] ??= UserRoleEnum::SELLER->value;
-        return Inertia::render('Admin/All/Index', [
-            'users' => $this->shopsInterface->filter($filters),
+        return Inertia::render('Admin/Shop/All/Index', [
+            'shops' => $this->shopsInterface->filter($filters),
             'filters' => $filters,
         ]);
     }
@@ -109,7 +108,7 @@ class ShopController extends Controller
      */
     public function show(string $id)
     {
-        //
+
     }
 
     /**
@@ -125,7 +124,7 @@ class ShopController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
     /**
@@ -133,6 +132,7 @@ class ShopController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->shopsInterface->deleteById($id);
+        return redirect()->back()->with('success', 'Shop deleted successfully');
     }
 }

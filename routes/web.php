@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/shops', [ShopController::class, 'index'])->name('shop.index');
     // Route::get('/admin/dashboard/users/{id}/show', [ShopController::class, 'show'])->name('shop.show');
-    // Route::delete('/admin/dashboard/users/{id}', [ShopController::class, 'destroy'])->name('shop.destroy');
+    Route::delete('/admin/shops/{id}', [ShopController::class, 'destroy'])->name('shop.destroy');
     // Route::patch('/admin/users/{id}', [ShopController::class, 'update'])->name('shop.users.update');
 
 
