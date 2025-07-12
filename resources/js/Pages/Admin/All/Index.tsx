@@ -13,7 +13,7 @@ export default function Orders({ users, filters }: { users: any; filters: any })
         { label: "ID", sortField: "id", sortable: true },
         { label: "Name", sortField: "first_name", sortable: true },
         { label: "Email", sortField: "email", sortable: false },
-        { label: "Phone Number", sortField: "phone", sortable: true },
+        { label: "Address", sortField: "address", sortable: true },
         { label: "Status", sortField: "status", sortable: true },
         { label: "Registered Date", sortField: "created_at", sortable: true },
     ];
@@ -53,7 +53,7 @@ export default function Orders({ users, filters }: { users: any; filters: any })
                                 buttons={
                                     <>
                                         <PrimaryLink
-                                            href={route("", {
+                                            href={route("admin.show", {
                                                 id: user.id,
                                             })}
                                         >
@@ -61,7 +61,7 @@ export default function Orders({ users, filters }: { users: any; filters: any })
                                             <span>View</span>
                                         </PrimaryLink>
                                         <ConfirmButton
-                                            url={route("", {
+                                            url={route("admin.destroy", {
                                                 id: user.id,
                                             })}
                                             label={

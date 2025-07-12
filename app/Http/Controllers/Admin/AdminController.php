@@ -8,7 +8,7 @@ use App\Http\Traits\UtilityTrait;
 use App\Repositories\All\Users\UsersInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
+use Illuminate\Http\RedirectResponse;
 
 class AdminController extends Controller
 {
@@ -17,9 +17,7 @@ class AdminController extends Controller
     use UtilityTrait;
     public function __construct(
         protected UsersInterface $usersInterface,
-    ) {
-
-    }
+    ) {}
 
 
     /**
@@ -64,7 +62,11 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = $this->usersInterface->findById($id);
+
+        return inertia('Admin/Show/Index', [
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -84,10 +86,14 @@ class AdminController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * destroy
+     *
+     * @param  mixed $id
+     * @return RedirectResponse
      */
-    public function destroy(string $id)
+    public function destroy($id): RedirectResponse
     {
-        //
+        $this->usersInterface->deleteById($id);
+        return redirect()->back()->with('success', 'User deleted successfully');
     }
 }
