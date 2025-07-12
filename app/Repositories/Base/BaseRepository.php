@@ -2,11 +2,9 @@
 
 namespace App\Repositories\Base;
 
-use App\Repositories\Base\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Schema;
 
 class BaseRepository implements BaseRepositoryInterface
 {
@@ -17,19 +15,30 @@ class BaseRepository implements BaseRepositoryInterface
 
     /**
      * BaseRepository constructor.
-     *
-     * @param  Model  $model
      */
     public function __construct(Model $model)
     {
         $this->model = $model;
     }
+
+    public function findByLast(
+        array $paramsAnddData,
+        array $columns = ['*'],
+        array $relations = []
+    ): ?Model {
+        return $this->model->select($columns)->with($relations)->where($paramsAnddData)->latest()->first();
+    }
+
+    public function findLast(
+        string $column,
+        array $columns = ['*'],
+        array $relations = []
+    ): ?Model {
+        return $this->model->select($columns)->with($relations)->latest($column)->first();
+    }
+
     // ss
-    /**
-     * @param  array  $columns
-     * @param  array  $relations
-     * @return Collection
-     */
+
     public function all(array $columns = ['*'], array $relations = []): Collection
     {
         return $this->model->with($relations)->get($columns);
@@ -38,11 +47,9 @@ class BaseRepository implements BaseRepositoryInterface
     /**
      * Method limit
      *
-     * @param int $limit [limit]
-     * @param array $columns [required columns]
-     * @param array $relations [required relations]
-     *
-     * @return Collection
+     * @param  int  $limit [limit]
+     * @param  array  $columns [required columns]
+     * @param  array  $relations [required relations]
      */
     public function limit(int $limit, array $columns = ['*'], array $relations = []): Collection
     {
@@ -50,30 +57,23 @@ class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Method count
-     *
-     * @return int
-     */
-    public function count(array $paramsAnddData): int
-    {
-        return $this->model->where($paramsAnddData)->count();
-    }
-
-    /**
      * Method paginate
      *
      * @param  int  $number [number of records per page]
-     * @return
      */
     public function paginate(int $number)
     {
         return $this->model->paginate($number);
     }
-
     /**
      * Get all trashed models.
-     *
-     * @return Collection
+     */
+    public function count()
+    {
+        return $this->model->count();
+    }
+    /**
+     * Get all trashed models.
      */
     public function allTrashed(): Collection
     {
@@ -82,29 +82,21 @@ class BaseRepository implements BaseRepositoryInterface
 
     /**
      * Find model by id.
-     *
-     * @param  int  $modelId
-     * @param  array  $columns
-     * @param  array  $relations
-     * @param  array  $appends
-     * @return Model
      */
     public function findById(
-        int $modelId,
+        $modelId,
         array $columns = ['*'],
         array $relations = [],
         array $appends = []
     ): ?Model {
         return $this->model->select($columns)->with($relations)->findOrFail($modelId)->append($appends);
     }
+
     /**
      * Find model by id.
      *
      * @param  array  $modelId
-     * @param  array  $columns
-     * @param  array  $relations
      * @param  array  $appends
-     * @return Model
      */
     public function findByColumn(
         array $paramsAnddData,
@@ -113,14 +105,26 @@ class BaseRepository implements BaseRepositoryInterface
     ): ?Model {
         return $this->model->select($columns)->with($relations)->where($paramsAnddData)->first();
     }
+
+    /**
+     * Find model by id.
+     *
+     * @param  array  $modelId
+     * @param  array  $appends
+     */
+    public function findByColumnWithTrashed(
+        array $paramsAnddData,
+        array $columns = ['*'],
+        array $relations = []
+    ): ?Model {
+        return $this->model->select($columns)->withTrashed()->with($relations)->where($paramsAnddData)->first();
+    }
+
     /**
      * Find model by columns.
      *
      * @param  array  $modelId
-     * @param  array  $columns
-     * @param  array  $relations
      * @param  array  $appends
-     * @return Collection
      */
     public function getByColumn(
         array $paramsAnddData,
@@ -130,44 +134,87 @@ class BaseRepository implements BaseRepositoryInterface
         return $this->model->select($columns)->with($relations)->where($paramsAnddData)->get();
     }
 
-    public function getRandom(
-        Int $limit,
-        array $idNotIn,
+
+    /**
+     * Find model by columns.
+     *
+     * @param  array  $modelId
+     * @param  array  $appends
+     */
+    public function getOrderbyColumn(
+        array $paramsAnddData,
+        string $flag,
+        string $orderColumn,
         array $columns = ['*'],
         array $relations = []
-    ) {
-        return $this->model->select($columns)->with($relations)->whereNotIn('id', $idNotIn)->inRandomOrder()->limit($limit)->get();
+    ): ?Collection {
+        return $this->model->select($columns)->with($relations)->where($paramsAnddData)->orderBy($flag, $orderColumn)->get();
     }
+
+    /**
+     * Find model by columns.
+     *
+     * @param  array  $modelId
+     * @param  array  $appends
+     */
+    public function getByColumnLarge(
+        array $paramsAnddData,
+        array $columns,
+        array $relations,
+        string $sortColumn,
+        bool $isLatest = false
+    ): ?Collection {
+        $query = $this->model->select($columns)->with($relations)->where($paramsAnddData);
+        if ($isLatest) {
+            $query = $query->latest($sortColumn);
+        } else {
+            $query = $query->orderBy($sortColumn);
+        }
+
+        return $query->get();
+    }
+
     /**
      * Find model by existsByColumn.
      *
      * @param  array  $modelId
-     * @param  array  $columns
-     * @return Boolean
      */
     public function existsByColumn(
         array $paramsAnddData,
-        array $columns = ['*']
-    ): ?Bool {
-        return $this->model->select($columns)->where($paramsAnddData)->exists();
+        array $columns = ['*'],
+        array $notNullParam = [],
+    ): ?bool {
+        return $this->model->select($columns)->where($paramsAnddData)->whereNotNull($notNullParam)->exists();
+    }
+
+    /**
+     * Find model by existsByColumn.
+     *
+     * @param  array  $modelId
+     */
+    public function existsById(
+        int $id,
+    ): bool {
+        return $this->model->where('id', $id)->exists();
     }
 
     /**
      * Find trashed model by id.
-     *
-     * @param  int  $modelId
-     * @return Model
      */
-    public function findTrashedById(int $modelId): ?Model
-    {
-        return $this->model->withTrashed()->findOrFail($modelId);
+    public function findTrashedById(
+        int $modelId,
+        array $columns = ['*'],
+        array $relations = [],
+        array $appends = []
+    ): ?Model {
+        return $this->model->select($columns)->withTrashed()->with($relations)->findOrFail($modelId)->append($appends);
     }
+    // {
+    //     return $this->model->withTrashed()->findOrFail($modelId);
+    // }
 
     /**
      * Find only trashed model by id.
-     *
-     * @param  int  $modelId
-     * @return Model
      */
     public function findOnlyTrashedById(int $modelId): ?Model
     {
@@ -176,19 +223,39 @@ class BaseRepository implements BaseRepositoryInterface
 
     /**
      * Create a model.
-     *
-     * @param  array  $payload
-     * @return Model
      */
     public function create(array $payload): ?Model
     {
-        return $this->model->create($payload);
+        $model = $this->model->create($payload);
+
+        return $model->fresh();
     }
+
+    public function findOrCreate(array $load, array $payload): ?Model
+    {
+        $model = $this->model->firstOrCreate($load, $payload);
+
+        return $model->fresh();
+    }
+
+    public function createOrUpdate(array $load, array $payload): ?Model
+    {
+        $model = $this->model->updateOrCreate($load, $payload);
+
+        return $model->fresh();
+    }
+
+    public function createOrUpdateWithTrashed(array $load, array $payload): ?Model
+    {
+        $model = $this->model->withTrashed()->updateOrCreate($load, $payload);
+
+        return $model->fresh();
+    }
+
     /**
      * Method createMany
      *
      * @param  array  $payloadCollection [collection of payload]
-     * @return Collection
      */
     public function createMany(array $payloadCollection): ?Collection
     {
@@ -197,37 +264,35 @@ class BaseRepository implements BaseRepositoryInterface
 
     /**
      * Update existing model.
-     *
-     * @param  int  $modelId
-     * @param  array  $payload
-     * @return bool
      */
-    public function update(int $modelId, array $payload): bool
+    public function update($modelId, array $payload): bool
     {
         $model = $this->findById($modelId);
 
         return $model->update($payload);
     }
+
     /**
      * Method updateWithMeta
      *
-     * @param int $modelId [explicite description]
-     * @param array $payload [explicite description]
-     *
-     * @return bool
+     * @param  int  $modelId [explicite description]
+     * @param  array  $payload [explicite description]
      */
     public function updateWithMeta(int $modelId, array $payload): bool
     {
         $model = $this->findById($modelId);
         $model->setAttributes($payload);
+
         return $model->save();
     }
-    /**
-     * @param int $modelId
-     * @param array $payload
-     *
-     * @return bool
-     */
+
+    public function updateByColumn(array $paramsAnddData, array $payload): bool
+    {
+        $model = $this->findByColumn($paramsAnddData);
+
+        return $model->update($payload);
+    }
+
     public function updateWithTrashed(int $modelId, array $payload): bool
     {
         $model = $this->findTrashedById($modelId);
@@ -237,31 +302,14 @@ class BaseRepository implements BaseRepositoryInterface
 
     /**
      * Delete model by id.
-     *
-     * @param  int  $modelId
-     * @return bool
      */
-    public function deleteById(int $modelId): bool
+    public function deleteById($modelId): bool
     {
         return $this->findById($modelId)->delete();
-    }
-    /**
-     * Method deleteByColumn
-     *
-     * @param array $params [explicite description]
-     *
-     * @return bool
-     */
-    public function deleteByColumn(array $params): bool
-    {
-        return $this->model->where($params)->delete();
     }
 
     /**
      * Restore model by id.
-     *
-     * @param  int  $modelId
-     * @return bool
      */
     public function restoreById(int $modelId): bool
     {
@@ -270,21 +318,48 @@ class BaseRepository implements BaseRepositoryInterface
 
     /**
      * Permanently delete model by id.
-     *
-     * @param  int  $modelId
-     * @return bool
      */
     public function permanentlyDeleteById(int $modelId): bool
     {
         return $this->findTrashedById($modelId)->forceDelete();
     }
+
     /**
-     * Method filter
+     * Method search
      *
-     * @param array $request [Http Request]
-     * @param array $with [Relations]
-     *
-     * @return LengthAwarePaginator
+     * @param  array  $columns [explicite description]
+     * @param  array  $relations [explicite description]
+     * @param  array  $filters [explicite description]
+     * @return void
+     */
+    public function search(array $columns, array $relations, array $filters)
+    {
+        if (isset($filters['type'])) {
+            $query = $this->model->select($columns)->onlyTrashed();
+        } else {
+            $query = $this->model->select($columns);
+        }
+        //relations
+        if (count($relations)) {
+            $query = $query->with($relations);
+        }
+        //filters
+        if (isset($filters['searchValue'])) {
+            $query = $query->where(function ($query) use ($filters) {
+                $query->where('title', 'like', '%'.$filters['searchValue'].'%')
+                    ->orWhere('id', 'like', '%'.$filters['searchValue'].'%');
+            });
+        }
+        if (isset($filters['perPage'], $filters['page'])) {
+            return $query->paginate($filters['perPage'], $filters['page']);
+        }
+
+        return $query->paginate();
+    }
+
+    /**
+     * @param  mixed  $filters
+     * @param  array  $with
      */
     public function filter($filters, $with = []): LengthAwarePaginator
     {
@@ -292,17 +367,15 @@ class BaseRepository implements BaseRepositoryInterface
         if (count($with) > 0) {
             $query = $query->with($with);
         }
-        return $query->Where('status', "!=", "draft")->paginate($filters['rowPerPage'])->appends($filters);
+
+        return $query->paginate($filters['rowPerPage'])->appends($filters);
     }
 
     /**
-     * @return Model
+     * @return [type]
      */
-    public function findLast(
-        string $column,
-        array $columns = ['*'],
-        array $relations = []
-    ): ?Model {
-        return $this->model->select($columns)->with($relations)->latest($column)->first();
+    public function getCount(array $paramsAnddData = [])
+    {
+        return $this->model->where($paramsAnddData)->count();
     }
 }

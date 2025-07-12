@@ -2,9 +2,9 @@
 
 namespace App\Repositories\Base;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface BaseRepositoryInterface
 {
@@ -16,6 +16,28 @@ interface BaseRepositoryInterface
      * @return Collection
      */
     public function all(array $columns = ['*'], array $relations = []): Collection;
+    /**
+     * Get all trashed models.
+     */
+    public function count();
+    /**
+     * Method limit
+     *
+     * @param int $limit [limit]
+     * @param array $columns [required columns]
+     * @param array $relations [required relations]
+     *
+     * @return Collection
+     */
+    public function limit(int $limit, array $columns = ['*'], array $relations = []): Collection;
+
+    /**
+     * Method paginate
+     *
+     * @param  int  $number [number of records per page]
+     * @return
+     */
+    public function paginate(int $number);
 
     /**
      * Get all trashed models.
@@ -23,12 +45,7 @@ interface BaseRepositoryInterface
      * @return Collection
      */
     public function allTrashed(): Collection;
-     /**
-     * Method count
-     *
-     * @return int
-     */
-    public function count(array $paramsAnddData): int;
+
     /**
      * Find model by id.
      *
@@ -39,12 +56,11 @@ interface BaseRepositoryInterface
      * @return Model
      */
     public function findById(
-        int $modelId,
+        $modelId,
         array $columns = ['*'],
         array $relations = [],
         array $appends = []
     ): ?Model;
-
     /**
      * Find model by id.
      *
@@ -74,6 +90,17 @@ interface BaseRepositoryInterface
         array $relations = []
     ): ?Collection;
     /**
+     * Find model by existsByColumn.
+     *
+     * @param  array  $modelId
+     * @param  array  $columns
+     * @return Boolean
+     */
+    public function existsByColumn(
+        array $paramsAnddData,
+        array $columns = ['*']
+    ): ?Bool;
+    /**
      * Find trashed model by id.
      *
      * @param  int  $modelId
@@ -98,13 +125,12 @@ interface BaseRepositoryInterface
     public function create(array $payload): ?Model;
 
     /**
-     * Update existing model.
+     * Method createMany
      *
-     * @param  int  $modelId
-     * @param  array  $payload
-     * @return bool
+     * @param  array  $payloadCollection [collection of payload]
+     * @return Collection
      */
-    public function update(int $modelId, array $payload): bool;
+    public function createMany(array $payloadCollection): ?Collection;
 
     /**
      * Update existing model.
@@ -113,7 +139,7 @@ interface BaseRepositoryInterface
      * @param  array  $payload
      * @return bool
      */
-    public function updateWithMeta(int $modelId, array $payload): bool;
+    public function update($modelId, array $payload): bool;
 
     /**
      * @param int $modelId
@@ -128,7 +154,7 @@ interface BaseRepositoryInterface
      * @param  int  $modelId
      * @return bool
      */
-    public function deleteById(int $modelId): bool;
+    public function deleteById($modelId): bool;
 
     /**
      * Restore model by id.
@@ -145,17 +171,13 @@ interface BaseRepositoryInterface
      * @return bool
      */
     public function permanentlyDeleteById(int $modelId): bool;
+
     /**
-     * Method filter
+     * filter
      *
-     * @param array $request [Http Request]
-     * @param array $with [Relations]
-     *
+     * @param  mixed $filters
+     * @param  mixed $with
      * @return LengthAwarePaginator
      */
     public function filter($filters, $with = []): LengthAwarePaginator;
-    /**
-     * @return Model
-     */
-    public function findLast(string $column,array $columns = ['*'],array $relations = []): ?Model;
 }

@@ -34,8 +34,6 @@ class AdminController extends Controller
         $filters['rowPerPage'] ??= 20;
         $filters['status'] ??= null;
         $filters['role'] ??= UserRoleEnum::USER->value;
-
-
         return Inertia::render('Admin/All/Index', [
             'users' => $this->usersInterface->filter($filters),
             'filters' => $filters,
