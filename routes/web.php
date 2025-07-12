@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\FoodMenu\FoodMenuController;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Seller\FoodMenu\FoodMenuController;
 use App\Http\Controllers\Shop\ShopController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;

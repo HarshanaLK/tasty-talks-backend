@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\FoodMenu;
+namespace App\Http\Controllers\Seller\FoodMenu;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,8 +13,10 @@ class FoodMenuController extends Controller
      */
     public function index()
     {
-        return Inertia::render('FoodMenu/Index', []);
-        
+
+
+        return Inertia::render('Seller/FoodMenu/Index', []);
+
     }
 
     /**
