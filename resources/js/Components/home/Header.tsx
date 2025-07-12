@@ -14,8 +14,8 @@ export default function Header() {
         />
       </div>
       <div className="flex items-center gap-4">
-        <Link to={"/login"} className="text-sm text-gray-600 hover:text-black">Login</Link>
-        <Link className="bg-black text-white px-4 py-2 rounded-full text-sm" to={"/register"}>Sign up</Link>
+        <Link href={"/login"}  className="text-sm text-gray-600 hover:text-black" >Login</Link>
+        <Link href={"/register"} className="bg-black text-white px-4 py-2 rounded-full text-sm" >Sign up</Link>
       </div>
     </header>
   );

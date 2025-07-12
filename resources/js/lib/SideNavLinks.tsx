@@ -14,7 +14,7 @@ export const navigationLinks = [
         link: true,
         border: false,
         startWith: "/admin/dashboard",
-        route: "dashboard",
+        route: "admin.index",
         icon: "SwatchIcon",
     },
     // {

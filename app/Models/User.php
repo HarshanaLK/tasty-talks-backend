@@ -3,9 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -49,10 +51,71 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => UserRoleEnum::class
         ];
     }
 
-     public function shop()
+    protected $appends = [
+        'name',
+        'created_at_human'
+    ];
+    /**
+     * scopeOrderByColumn
+     *
+     * @param  mixed $query
+     * @param  mixed $column
+     * @param  mixed $direction
+     * @return void
+     */
+    public function scopeOrderByColumn($query, $column, $direction = 'asc')
+    {
+        $query->orderBy($column, $direction);
+    }
+    /**
+     * scopeFilter
+     *
+     * @param  mixed $query
+     * @param  mixed $filters
+     * @return void
+     */
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['searchParam'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->Where('first_name', 'like', "%$search%")
+                    ->orWhere('last_name', 'like', "%$search%")
+                    ->orWhere('id', 'like', "%$search%");
+            });
+        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
+            if ($trashed === 'with') {
+                $query->withTrashed();
+            } elseif ($trashed === 'only') {
+                $query->onlyTrashed();
+            }
+        })->when($filters['role'] ?? null, function ($query, $role) {
+            $query->where('role', $role);
+        });
+    }
+    /**
+     * @return [type]
+     */
+    public function getCreatedAtHumanAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('M d, Y \a\t g:i A');
+    }
+    /**
+     * getNameHumanAttribute
+     *
+     * @return string
+     */
+    public function getNameAttribute(): string
+    {
+        $firstName = ucfirst(strtolower($this->first_name));
+        $lastName = ucfirst(strtolower($this->last_name));
+        return "$firstName $lastName";
+    }
+
+    public function shop()
     {
         return $this->hasOne(Shop::class); // Adjust this if your Module model's namespace is different
     }
