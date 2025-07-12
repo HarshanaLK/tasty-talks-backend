@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Shop;
 
+use App\Enums\UserRoleEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\UtilityTrait;
 use App\Models\Shop;
+use App\Repositories\All\Shops\ShopsInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -11,18 +14,28 @@ use Illuminate\Support\Facades\Storage;
 
 class ShopController extends Controller
 {
+
+    use UtilityTrait;
+    public function __construct(
+        protected ShopsInterface $shopsInterface,
+    ) {}
+
+
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        $user = Auth::user(); // Get the authenticated user
-
-        $shop = $user->shop; // Get the related shop via the hasOne relationship
-
-        return Inertia::render('shop/ShopEdit', [
-            'shop' => $shop,
+        $filters = $request->all(['searchParam', 'sortBy', 'sortDirection', 'rowPerPage', 'page']);
+        $filters['sortBy'] ??= 'created_at';
+        $filters['sortDirection'] ??= 'desc';
+        $filters['rowPerPage'] ??= 20;
+        $filters['status'] ??= null;
+        $filters['role'] ??= UserRoleEnum::SELLER->value;
+        return Inertia::render('Admin/All/Index', [
+            'users' => $this->shopsInterface->filter($filters),
+            'filters' => $filters,
         ]);
     }
     /**

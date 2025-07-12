@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\All\Shops\ShopsInterface;
+use App\Repositories\All\Shops\ShopsRepository;
 use App\Repositories\All\Users\UsersInterface;
 use App\Repositories\All\Users\UsersRepository;
 use Illuminate\Support\Facades\Vite;
@@ -14,7 +16,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-          app()->bind(UsersInterface::class, UsersRepository::class);
+        app()->bind(UsersInterface::class, UsersRepository::class);
+        app()->bind(ShopsInterface::class, ShopsRepository::class);
     }
 
     /**

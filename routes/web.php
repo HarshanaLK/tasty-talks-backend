@@ -38,8 +38,15 @@ Route::middleware('auth')->group(function () {
 
 
 
+    Route::get('/admin/shops', [ShopController::class, 'index'])->name('shop.index');
+    // Route::get('/admin/dashboard/users/{id}/show', [ShopController::class, 'show'])->name('shop.show');
+    // Route::delete('/admin/dashboard/users/{id}', [ShopController::class, 'destroy'])->name('shop.destroy');
+    // Route::patch('/admin/users/{id}', [ShopController::class, 'update'])->name('shop.users.update');
 
-    Route::get('/user/shop/dashboard', [ShopController::class, 'index'])->name('shop.index');
+
+
+
+    // Route::get('/user/shop/dashboard', [ShopController::class, 'index'])->name('shop.index');
     Route::get('/user/shop/food', [FoodMenuController::class, 'index'])->name('food.index');
 
 
