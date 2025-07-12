@@ -32,13 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/users/{id}/show', [AdminController::class, 'show'])->name('admin.show');
-    Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
-
-
-
-
-
+    Route::get('/admin/dashboard/users/{id}/show', [AdminController::class, 'show'])->name('admin.show');
+    Route::delete('/admin/dashboard/users/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+    Route::patch('/admin/users/{id}', [AdminController::class, 'update'])->name('admin.users.update');
 
 
 

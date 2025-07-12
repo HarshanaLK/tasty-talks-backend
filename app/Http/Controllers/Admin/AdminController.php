@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\UserRoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\UtilityTrait;
+use App\Models\User;
 use App\Repositories\All\Users\UsersInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -80,9 +81,21 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'id_number' => 'nullable|string',
+            'role' => 'required|string',
+            'address' => 'nullable|string',
+            'status' => 'required|in:active,inactive,draft',
+        ]);
+
+        $user->update($validated);
+
+        return back()->with('success', 'User updated successfully.');
     }
 
     /**
