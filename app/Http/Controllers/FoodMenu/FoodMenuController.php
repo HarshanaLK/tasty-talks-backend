@@ -13,9 +13,8 @@ class FoodMenuController extends Controller
      */
     public function index()
     {
-         return Inertia::render('FoodMenu/Index', [
-
-        ]);
+        return Inertia::render('FoodMenu/Index', []);
+        
     }
 
     /**

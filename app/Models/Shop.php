@@ -101,4 +101,9 @@ class Shop extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function shops()
+    {
+        return $this->hasMany(Food::class);
+    }
 }

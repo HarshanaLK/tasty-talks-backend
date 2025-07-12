@@ -43,11 +43,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/admin/shops/{id}', [ShopController::class, 'destroy'])->name('shop.destroy');
     // Route::patch('/admin/users/{id}', [ShopController::class, 'update'])->name('shop.users.update');
 
-
-
-
     // Route::get('/user/shop/dashboard', [ShopController::class, 'index'])->name('shop.index');
-    Route::get('/user/shop/food', [FoodMenuController::class, 'index'])->name('food.index');
+    Route::get('/seller/shop/menu', [FoodMenuController::class, 'index'])->name('food.index');
+
+
+
+
+
 
 
     //  Route::post('/admin/shops/store', [ShopController::class, 'store'])->name('shops.store');
