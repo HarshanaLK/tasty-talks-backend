@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\Admin\AdminController;
 
-use App\Http\Controllers\HomeController;
+
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Public\Home\HomeController;
 use App\Http\Controllers\Public\PublicShopController;
 use App\Http\Controllers\Seller\FoodMenu\FoodMenuController;
 use App\Http\Controllers\Shop\ShopController;

@@ -7,7 +7,8 @@ import HomeLayout from "@/Layouts/HomeLayout";
 
 
 
-export default function Index() {
+export default function Index({shops}:{shops:any}) {
+
   return (
     <HomeLayout>
       <HeroBanner />
@@ -15,8 +16,7 @@ export default function Index() {
         <CategoryFilterBar />
         <FilterOptionsBar />
         <PaidAdvertistment />
-        <CategorySection />
-        <CategorySection />
+        <CategorySection shops={shops} />
       </div>
     </HomeLayout>
   );

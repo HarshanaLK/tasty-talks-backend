@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Public\Home;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Controllers\Controller;
+use App\Models\Shop;
 
 class HomeController extends Controller
 {
@@ -12,8 +14,9 @@ class HomeController extends Controller
      */
     public function home()
     {
+        $shops = Shop::all();
         return Inertia::render('Public/Home/Index', [
-
+            'shops' => $shops,
         ]);
     }
 
