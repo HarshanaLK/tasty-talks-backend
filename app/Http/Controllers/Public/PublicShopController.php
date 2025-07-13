@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -11,10 +12,7 @@ class PublicShopController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-
-    }
+    public function index() {}
 
     /**
      * Show the form for creating a new resource.
@@ -37,8 +35,9 @@ class PublicShopController extends Controller
      */
     public function show(string $id)
     {
-            return Inertia::render('Admin/All/Index', [
-
+        $shop = Shop::findOrFail($id);
+        return Inertia::render('Public/Shop/Index', [
+            'shopData' => $shop,
         ]);
     }
 
