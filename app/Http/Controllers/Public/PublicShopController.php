@@ -1,32 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Seller\FoodMenu;
+namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
-use App\Models\Food;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Auth;
 
-class FoodMenuController extends Controller
+class PublicShopController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // Get the authenticated user
-        $user = Auth::user();
 
-        // Get the user's shop
-        $shop = $user->shops;
-
-        // If user has a shop, get its foods
-        $foods = $shop ? $shop->foods()->with('category')->get() : collect([]);
-
-        return Inertia::render('Seller/FoodMenu/Index', [
-            'foods' => $foods,
-        ]);
     }
 
     /**
@@ -50,7 +37,9 @@ class FoodMenuController extends Controller
      */
     public function show(string $id)
     {
-        //
+            return Inertia::render('Admin/All/Index', [
+
+        ]);
     }
 
     /**

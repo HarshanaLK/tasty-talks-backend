@@ -118,7 +118,7 @@ const Header = ({
                                   src={""}
                                   alt="site logo"
                               /> */}
-                              <h1 className="text-2xl font-bold ml-5 text-green-500">TastyTalks</h1>
+                               <Link href={"/"} ><h1 className="text-3xl font-bold text-green-600 ml-4">TastyTalks</h1></Link>
 
                           </Link>
                           <button

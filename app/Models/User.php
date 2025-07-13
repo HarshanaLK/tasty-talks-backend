@@ -115,8 +115,8 @@ class User extends Authenticatable
         return "$firstName $lastName";
     }
 
-    public function shop()
+    public function shops()
     {
-        return $this->hasOne(Shop::class); // Adjust this if your Module model's namespace is different
+        return $this->hasOne(Shop::class);
     }
 }

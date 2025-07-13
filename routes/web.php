@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Public\PublicShopController;
 use App\Http\Controllers\Seller\FoodMenu\FoodMenuController;
 use App\Http\Controllers\Shop\ShopController;
 use Illuminate\Foundation\Application;
@@ -57,6 +58,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/shops/save', [ShopController::class, 'save'])->middleware('auth')->name('shops.save');
+
+Route::get('/shops/{id}', [PublicShopController::class, 'show'])->name('public.shop.index');
 
 
 require __DIR__ . '/auth.php';
